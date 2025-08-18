@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Include all API routes from users app
     path('api/', include('users.urls')),
+    path('api/', include(('events.urls', 'events'), namespace='events')),
+  # Add events app routes
 ]
