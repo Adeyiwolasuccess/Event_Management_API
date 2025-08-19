@@ -91,3 +91,12 @@ class Registration(models.Model):
 
     def __str__(self):
         return f"{self.user} -> {self.event} ({self.status})"
+
+class TicketPricing(models.Model):
+        event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="tickets")
+        ticket_type = models.CharField(max_length=50)
+        price = models.DecimalField(max_digits=10, decimal_places=2)
+        currency = models.CharField(max_length=10, default="USD")
+
+def __str__(self):
+        return f"{self.ticket_type} - {self.price} {self.currency} ({self.event.title})"

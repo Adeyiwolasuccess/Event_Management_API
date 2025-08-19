@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.utils import timezone
 from .models import EventCategory
 from .models import Event
+from .models import TicketPricing
 
 class EventCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +29,9 @@ class EventSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['created_by'] = self.context['request'].user
         return super().create(validated_data)
+
+class TicketPricingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TicketPricing
+        fields = ['id', 'event', 'ticket_type', 'price', 'currency']
+        read_only_fields = ['id', 'event']
