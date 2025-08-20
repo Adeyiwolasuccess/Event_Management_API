@@ -8,10 +8,10 @@ router.register(r'users', UserViewSet, basename='user')
 
 urlpatterns = [
     # Auth
-    path('auth/register/', RegisterUserView.as_view(), name='user-register'),
-    path('auth/login/', TokenObtainPairView.as_view(), name='user-login'),
-    path('auth/logout/', LogoutUserView.as_view(), name='user-logout'),
-    path('auth/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+    path('register/', RegisterUserView.as_view(), name='user-register'),
+    path('login/', TokenObtainPairView.as_view(), name='user-login'),
+    path('logout/', LogoutUserView.as_view(), name='user-logout'),
+    path('refresh/', TokenRefreshView.as_view(), name='token-refresh'),
 
     # Profile
     path('users/me/', CurrentUserView.as_view(), name='user-profile'),

@@ -41,9 +41,8 @@ class Event(models.Model):
         return max(self.capacity - self.seats_taken(), 0)
 
     def is_full(self):
-        if self.capacity == 0:
-            return False
-        return self.seats_taken() >= self.capacity
+        """Check if event has reached maximum capacity."""
+        return self.registrations.count() >= self.capacity
 
     def __str__(self):
         return f"{self.title} @ {self.date}"
@@ -54,6 +53,7 @@ class TicketPricing(models.Model):
     ticket_type = models.CharField(max_length=80)  # VIP, Regular etc
     price = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(max_length=10, default='USD')
+    available_quantity = models.PositiveIntegerField(default=0)
 
     class Meta:
         unique_together = ('event', 'ticket_type')
