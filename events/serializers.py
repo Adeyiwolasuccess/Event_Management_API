@@ -7,7 +7,7 @@ from .models import TicketPricing
 
 class EventCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        models = EventCategory
+        model = EventCategory
         fields = [
             'id', 'name', 'description']
 
@@ -34,23 +34,20 @@ class EventSerializer(serializers.ModelSerializer):
 class TicketPricingSerializer(serializers.ModelSerializer):
     class Meta:
         model = TicketPricing
-        fields = ['id', 'event', 'ticket_type', 'price', 'currency', 'available_quantity']
+        fields = ['id', 'event', 'ticket_type', 'price', 'currency']
         read_only_fields = ['id', 'event']
 
 class RegistrationSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source="user.username")
-    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    event = serializers.ReadOnlyField(source="event.id")  # <-- make it read-only
 
     class Meta:
         model = Registration
         fields = ["id", "user", "event", "status", "registration_date"]
-        read_only_fields = ["id", "status", "registration_date"]
+        read_only_fields = ["id", "event", "status", "registration_date"]
 
     def create(self, validated_data):
         """
-        Ensure user is automatically set to the current authenticated user.
+        User and event are set in the ViewSet (perform_create).
         """
-        request = self.context.get("request")
-        if request and hasattr(request, "user"):
-            validated_data["user"] = request.user
         return super().create(validated_data)
