@@ -52,7 +52,8 @@ principles with JWT-based authentication.
 
 ---
 
-## API Endpoints
+## API Endpoints & Server
+https://event-management-api-g3ph.onrender.com
 
 ### 1. Authentication & Profile
 - `POST /api/auth/register/` — Register a new user
